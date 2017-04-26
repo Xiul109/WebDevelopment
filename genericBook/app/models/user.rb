@@ -35,4 +35,6 @@ class User
   # field :locked_at,       type: Time
   field :name, type: String
   field :bio, type: String
+  field :role, type: String, default:"peasant"
+  has_many :users
 end
