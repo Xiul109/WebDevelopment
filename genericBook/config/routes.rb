@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { :registrations => "users/registrations" }
   resources :users, only: [:index]
+  match 'profile/:id' => 'users#profile', via: [:get], :as => :profile
 #  root "users/sessions#create"
 #  authenticated :user do
 #    root 'secret#index', as: :authenticated_root
