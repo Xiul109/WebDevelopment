@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { :registrations => "users/registrations" },:path_prefix => 'me'
   resources :users, only: [:index]
-  match 'users/:id' => 'users#profile', via: [:get], :as => :profile
-  match 'users/:id/edit' => 'users#adminEdit', via: [:get], :as =>:adminEdit
-  match 'users/:id/update' => 'users#update', via: [:patch], :as =>:update
+  match 'users/:id' => 'users#profile', via: [:get], :as => :user_profile
+  match 'users/:id/edit' => 'users#edit', via: [:get], :as =>:user_edit
+  match 'users/:id/update' => 'users#update', via: [:patch], :as =>:user_update
+  match 'users/:id/delete' => 'users#delete', via: [:delete], :as =>:user_delete
+  match 'users/:id/promote' => 'users#promote', via: [:patch], :as =>:user_promote
   root to: "users#index"
 #  authenticated :user do
 #    root 'secret#index', as: :authenticated_root

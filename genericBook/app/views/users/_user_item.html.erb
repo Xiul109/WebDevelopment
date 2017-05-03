@@ -1,4 +1,8 @@
+<% if user.role =="admin" %>
+<nav class="navbar navbar-inverse">
+<% else %>
 <nav class="navbar navbar-default">
+<% end %>
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -8,7 +12,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href=<%= (profile_path user.id) %>><%= user.name %></a>
+      <a class="navbar-brand" href=<%= (user_profile_path user.id) %>><%= user.name %></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -18,7 +22,11 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if current_user.role=="admin" %>
-          <li class="active"><a href=<%= (adminEdit_path user.id) %>>Edit User</a></li>
+          <li class="active"><%= link_to(:Edit,user_edit_path(user.id),method: "get") %></li>
+          <li class="active"><%= link_to(:Delete,user_delete_path(user.id),method: "delete") %></li>
+          <% if user.role!="admin" %>
+              <li class="active"><%= link_to(:Promote,user_promote_path(user.id),method: "patch") %></li>
+          <% end %>
         <% end %>
       </ul>
     </div><!-- /.navbar-collapse -->

@@ -15,11 +15,8 @@ class UsersController < ApplicationController
 			end
 		end
 	end
-	def not_found
-		raise ActionController::RoutingError.new('404 - Not Found')
-	end
 	
-	def adminEdit
+	def edit
 		if current_user.role!="admin"
 			not_found
 		elsif params[:id]
@@ -32,20 +29,60 @@ class UsersController < ApplicationController
 	def update
 		if current_user.role=="admin"
 			if user_params[:password]==user_params[:password_confirmation]
-				if user_params[:password]==""
-					User.update(params[:id], :name => user_params[:name], :bio => user_params[:bio],:email => user_params[:email])
+				if @user=User.find(id: params[:id])
+					if user_params[:password]==""
+						@user.update(:name => user_params[:name], :bio => user_params[:bio],:email => user_params[:email])
+					else
+						@user.update(:name => user_params[:name], :bio => user_params[:bio],:email => user_params[:email] ,:encrypted_password => User.new(:password=>user_params[:password]).encrypted_password)
+					end
+					redirect_to users_path
 				else
-					User.update(params[:id], :name => user_params[:name], :bio => user_params[:bio],:email => user_params[:email] ,:encrypted_password => User.new(:password=>user_params[:password]).encrypted_password)
+					not_found
 				end
 			else
-				flash.alert = "La contraseña no coincide con la confirmación"
+				flash.alert = "The passwords doesn't match"
+				redirect_to :back
 			end
 		else
-			flash.alert = "No estás autorizado para modificar un usuario"
+			not_autorized
+			redirect_to :back
 		end
 	end
 	
+	def delete
+		if current_user.role=="admin"
+			if @user=User.find(params[:id])
+				@user.destroy
+			else
+				not_found
+			end
+		else
+			not_autorized
+		end
+	end
+	
+	def promote
+		if current_user.role=="admin"
+			if @user=User.find(params[:id])
+				@user.update(role: "admin")
+			else
+				not_found
+			end
+		else
+			not_autorized
+		end
+	end
+
+	#Aux functions
 	def user_params
 		params.require :user
+	end
+	
+	def not_autorized
+		flash.alert = "You are not autorized"
+	end
+	
+	def not_found
+		raise ActionController::RoutingError.new('404 - Not Found')
 	end
 end
