@@ -13,6 +13,14 @@
       <%= render 'devise/menu/registration_items' %>
       <%= render 'devise/menu/login_items' %>
     </ul>
-    <%= yield %>
+    <content>
+    	<%= yield %>
+    </content>
+    <% if flash[:alert] %>
+        <div class="alert"><%= flash[:alert] %></div>
+    <% end %>
+    <% if flash[:notice] %>
+        <div class="notice"><%= flash[:notice] %></div>
+    <% end %>
   </body>
 </html>
