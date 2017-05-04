@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   match 'users/:id/update' => 'users#update', via: [:patch], :as =>:user_update
   match 'users/:id/delete' => 'users#delete', via: [:delete], :as =>:user_delete
   match 'users/:id/promote' => 'users#promote', via: [:patch], :as =>:user_promote
+  match 'users/addFriend/:id' => 'users#addFriend', via: [:post], :as =>:user_addFriend
   root to: "users#index"
 #  authenticated :user do
 #    root 'secret#index', as: :authenticated_root

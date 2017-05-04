@@ -36,5 +36,5 @@ class User
   field :name, type: String
   field :bio, type: String
   field :role, type: String, default:"peasant"
-  has_many :users
+  has_many :friendships, inverse_of: :owner
 end
