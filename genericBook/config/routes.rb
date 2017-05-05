@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { :registrations => "users/registrations" },:path_prefix => 'me'
   resources :users, only: [:index]
+   match 'users/me' => 'users#me', via: [:get], :as => :user_me
   match 'users/:id' => 'users#profile', via: [:get], :as => :user_profile
   match 'users/:id/edit' => 'users#edit', via: [:get], :as =>:user_edit
   match 'users/:id/update' => 'users#update', via: [:patch], :as =>:user_update
