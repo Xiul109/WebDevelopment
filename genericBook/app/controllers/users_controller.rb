@@ -1,13 +1,6 @@
 class UsersController < ApplicationController
 	def index
 		@friends=queryFriends
-		puts
-		puts
-		puts
-		puts @friends.class
-		puts
-		puts
-		puts
 		if current_user.role=="admin"
 			@users=User.where(:id.ne=>current_user.id)
 		else
