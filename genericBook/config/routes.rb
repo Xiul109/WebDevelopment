@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   match 'users/addFriend/:id' => 'users#addFriend', via: [:post], :as =>:user_addFriend
   match 'friendships/deny/:id' => 'friendships#deny', via: [:delete], :as => :friendships_deny
   match 'friendships/accept/:id' => 'friendships#accept', via: [:patch], :as => :friendships_accept
+  match 'friendships/revoke/:id' => 'friendships#revoke', via: [:delete], :as => :friendships_revoke
   
   root to: "users#index"
 #  authenticated :user do

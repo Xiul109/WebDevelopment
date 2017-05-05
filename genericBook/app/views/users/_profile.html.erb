@@ -1,0 +1,21 @@
+<div class="container">
+  <h1><%= user.name %></h1>
+  <h2>Biography</h2>
+  <div class="panel panel-default">
+    <div class="panel-body"><%= user.bio %></div>
+  </div>
+</div>
+<ul>
+  <table class="table">
+    <thead class="thead-inverse">
+      <tr>
+        <th>Friends list</th>
+      </tr>
+    </thead>
+  <tbody>
+    <% friends.each do |friendship| %>
+      <%= render 'users/friend_list',friendship: friendship, user: user %>
+    <% end %>
+  </tbody>
+  </table>
+</ul>

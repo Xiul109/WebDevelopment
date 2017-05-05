@@ -10,7 +10,9 @@ class UsersController < ApplicationController
 	
 	def profile
 		if params[:id]
-			if !@user=User.find(:id=>params[:id])
+			if @user=User.find(:id=>params[:id])
+				@friends=@user.friendships.where(type: "confirmed")
+			else
 				not_found
 			end
 		end
