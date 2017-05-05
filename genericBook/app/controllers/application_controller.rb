@@ -5,10 +5,12 @@ class ApplicationController < ActionController::Base
 	
 	#AUX functions
 	def queryFriends(type=nil)
-		if !type
-			current_user.friendships
-		else
-			current_user.friendships.where(type: type)
+		if user_signed_in?
+			if !type
+				current_user.friendships
+			else
+				current_user.friendships.where(type: type)
+			end
 		end
 	end
 	

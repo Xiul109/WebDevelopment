@@ -12,7 +12,7 @@
     <ul class="hmenu">
       <%= render 'devise/menu/registration_items' %>
       <%= render 'devise/menu/login_items' %>
-      <%= "You have #{@unconfirmedFriends.length} friendship petitions" %>
+      <li><%if user_signed_in?%> You have <%=link_to @unconfirmedFriends.length, user_petitions_path%> friendship petitions<%end%></li>
     </ul>
     <content>
     	<%= yield %>

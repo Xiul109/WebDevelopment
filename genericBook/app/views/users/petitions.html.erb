@@ -1,0 +1,4 @@
+<% @unconfirmedFriends.each do |petition| %>
+	<% petUser=petition.friend %>
+	<div><%=link_to petUser.name, user_profile_path(petUser.id) %></div>
+<% end %>

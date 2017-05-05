@@ -94,6 +94,12 @@ class UsersController < ApplicationController
 		end
 		reload
 	end
+	
+	def petitions
+		if @unconfirmedFriends.length<=0
+			flash.notice="Currently you don't have friend petitions"
+		end
+	end
 
 	#Aux functions
 	def confirmFriend user, friend
