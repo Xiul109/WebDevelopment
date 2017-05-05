@@ -1,6 +1,13 @@
 class UsersController < ApplicationController
 	def index
-		queryFriends
+		@friends=queryFriends
+		puts
+		puts
+		puts
+		puts @friends.class
+		puts
+		puts
+		puts
 		if current_user.role=="admin"
 			@users=User.where(:id.ne=>current_user.id)
 		else
@@ -77,36 +84,33 @@ class UsersController < ApplicationController
 	end
 	
 	def addFriend
-		#Cambiar params y hacer comprobaciones y añadir amistad también al otro usuario
-		@f=Friendship.new
-		@friendship.owner=current_user
-		@friendship.friend=User.find(params[:id])
-		@friendship.save
-		flash.notice = "The petition has been sended"
+		if @user=User.find(params[:id])
+			friendship1=Friendship.new
+			friendship1.owner=current_user
+			friendship1.friend=@user
+			friendship1.save
+		
+			friendship2=Friendship.new
+			friendship2.owner=@user
+			friendship2.friend=current_user
+			friendship2.type= "unconfirmed"
+			friendship2.save
+			flash.notice = "The petition has been sended"
+		else
+			not_found
+		end
 		reload
 	end
 
 	#Aux functions
-	def reload
-		redirect_back(fallback_location: root_path)
+	def confirmFriend user, friend
+		f1=user.friendships.find(friend: friend)
+		f1.type="confirmed"
+		
+		f2=friend.friendships.find(friend: user)
+		f2.type="confirmed"
 	end
 	def user_params
 		params.require :user
-	end
-	
-	def not_autorized
-		flash.alert = "You are not autorized"
-	end
-	
-	def queryFriends(type=nil)
-		if !type
-			@friends=current_user.friendships
-		else
-			@friends=current_user.friendships.where(type: type)
-		end
-	end
-	
-	def not_found
-		raise ActionController::RoutingError.new('404 - Not Found')
 	end
 end
