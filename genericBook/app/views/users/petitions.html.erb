@@ -1,4 +1,4 @@
 <% @unconfirmedFriends.each do |petition| %>
 	<% petUser=petition.friend %>
-	<div><%=link_to petUser.name, user_profile_path(petUser.id) %></div>
+	<div><%=link_to petUser.name, user_profile_path(petUser.id)%> <%=link_to "Deny", friendships_deny_path(petition.id),method: :delete%> <%=link_to "Accept", friendships_accept_path(petition.id),method: :patch%></div>
 <% end %>

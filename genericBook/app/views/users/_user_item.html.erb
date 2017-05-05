@@ -22,12 +22,14 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
       	<%	isFriend=false
-      		@friends.each do |f|
-      			if f.friend==user
-      				isFriend=true
-      				break
-      			end
-      		end 
+      		if @friends!=nil
+		  		@friends.each do |f|
+		  			if f.friend==user
+		  				isFriend=true
+		  				break
+		  			end
+		  		end
+      		end
       	%>
         <% if @friends== nil or !isFriend %>
             <li class="active"><%= link_to("Add Friend",user_addFriend_path(user.id), method: "post") %></li>
