@@ -112,4 +112,8 @@ class UsersController < ApplicationController
 	def user_params
 		params.require :user
 	end
+	
+	def me
+		@friends=queryFriends "confirmed"
+	end
 end

@@ -2,6 +2,20 @@
   <h1><%= current_user.name %></h1>
   <h2>Biography</h2>
   <div class="panel panel-default">
-	  <div class="panel-body"><%= current_user.bio %></div>
+    <div class="panel-body"><%= current_user.bio %></div>
   </div>
 </div>
+<ul>
+  <table class="table">
+    <thead class="thead-inverse">
+      <tr>
+        <th>Friends list</th>
+      </tr>
+    </thead>
+  <tbody>
+    <% @friends.each do |friendship| %>
+      <%= render 'users/friend_list',friendship: friendship %>
+    <% end %>
+  </tbody>
+  </table>
+</ul>
