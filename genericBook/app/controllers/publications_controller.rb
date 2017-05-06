@@ -24,10 +24,18 @@ class PublicationsController < ApplicationController
   # POST /publications
   # POST /publications.json
   def create
-    @publication = Publication.new(publication_params)
-
+    @publication = Publication.new
+    @publication.text=publication_params["text"]
+    @publication.user=current_user
+    
+    shared=Shared_publication.new
+    shared.user=current_user
     respond_to do |format|
       if @publication.save
+        shared=Shared_publication.new
+        shared.user=current_user
+        shared.publication=@publication
+        shared.save
         format.html { redirect_to @publication, notice: 'Publication was successfully created.' }
         format.json { render :show, status: :created, location: @publication }
       else
