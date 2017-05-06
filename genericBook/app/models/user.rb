@@ -37,4 +37,7 @@ class User
   field :bio, type: String
   field :role, type: String, default:"peasant"
   has_many :friendships, inverse_of: :owner
+  
+  has_many :publications, :class_name=>"Publication"
+  has_many :sharedPublications
 end
