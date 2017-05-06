@@ -1,21 +1,45 @@
 <div class="container">
   <h1><%= user.name %></h1>
-  <h2>Biography</h2>
-  <div class="panel panel-default">
-    <div class="panel-body"><%= user.bio %></div>
+  <div class="row">
+    <div class="col-sm-6">
+      <table class="table">
+      <thead>
+        <tr>
+          <th>Biography</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td> <%=user.bio%></td>
+        </tr>
+      </tbody>
+      </table>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Friends list</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% friends.each do |friendship| %>
+            <%= render 'users/friend_list',friendship: friendship, user: user %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-sm-6">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Publications</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% user.shared_publications.each do |publication| %>
+            <%= render 'users/publications', publication: publication.publication %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
-<ul>
-  <table class="table">
-    <thead class="thead-inverse">
-      <tr>
-        <th>Friends list</th>
-      </tr>
-    </thead>
-  <tbody>
-    <% friends.each do |friendship| %>
-      <%= render 'users/friend_list',friendship: friendship, user: user %>
-    <% end %>
-  </tbody>
-  </table>
-</ul>
