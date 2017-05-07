@@ -21,8 +21,9 @@ class PublicationsController < ApplicationController
 
   # GET /publications/1/edit
   def edit
-    if !rent_user.role="admin" or @publication.user=current_user
+    if !(current_user.role="admin" or @publication.user==current_user)
 		not_autorized
+		reload
 	end
   end
 
@@ -53,9 +54,9 @@ class PublicationsController < ApplicationController
   # PATCH/PUT /publications/1
   # PATCH/PUT /publications/1.json
   def update
-	if rent_user.role="admin" or @publication.user=current_user
+	if current_user.role="admin" or @publication.user==current_user
 		respond_to do |format|
-		  if @publication.update(publication_params)
+		  if @publication.update(text: publication_params[:text])
 			format.html { redirect_to @publication, notice: 'Publication was successfully updated.' }
 			format.json { render :show, status: :ok, location: @publication }
 		  else
@@ -65,13 +66,15 @@ class PublicationsController < ApplicationController
 		end
 	else
 		not_autorized
+		reload
 	end
   end
 
   # DELETE /publications/1
   # DELETE /publications/1.json
   def destroy
-    if current_user.role="admin" or @publication.user=current_user
+    if current_user.role="admin" or @publication.user==current_user
+		Shared_publication.where(publication: @publication).destroy
 		@publication.destroy
 		respond_to do |format|
 		  format.html { redirect_to publications_url, notice: 'Publication was successfully destroyed.' }
