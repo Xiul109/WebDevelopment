@@ -82,6 +82,7 @@ class PublicationsController < ApplicationController
 		end
 	else
 		not_autorized
+		reload
 	end
   end
   
@@ -95,10 +96,35 @@ class PublicationsController < ApplicationController
   end
   
   def unshare
+  	if @shared=Shared_publication.find(params[:id])
+  		if current_user.role="admin" or @shared.user==current_user
+	  		@shared.destroy
+	  	else
+	  		not_autorized
+	  	end
+	  	reload
+  	else
+  		not_found
+  	end
+  end
+  
+  def like
   	set_publication
-  	if @shared=Shared_publication.find_by(user: current_user, publication: @publication)
-  		@shared.destroy
-  		reload
+  	@like=Like.new
+  	@like.publication=@publication
+  	@like.user=current_user
+  	@like.save
+  	reload
+  end
+  
+  def dislike
+  	if @like=Like.find(params[:id])
+  		if current_user.role="admin" or @like.user==current_user
+	  		@like.destroy
+	  	else
+	  		not_autorized
+	  	end
+	  	reload
   	else
   		not_found
   	end

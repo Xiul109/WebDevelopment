@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   
   match 'publications/:id/share' => 'publications#share', via: [:post], :as => :share_publication
   match 'publications/:id/unshare' => 'publications#unshare', via: [:delete], :as => :unshare_publication
+
+  match 'publications/:id/like' => 'publications#like', via: [:post], :as => :like_publication
+  match 'publications/:id/dislike' => 'publications#dislike', via: [:delete], :as => :dislike_publication
   
   root to: "users#index"
 #  authenticated :user do
