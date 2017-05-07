@@ -1,5 +1,5 @@
 <tr>
-  <td><%= link_to(friendship.friend.name,user_profile_path(friendship.friend.id))%></td>
+  <td style="width:100%"><%= link_to(friendship.friend.name,user_profile_path(friendship.friend.id))%></td>
   <%if user==current_user or current_user.role=="admin" %>
   <td><%= link_to("Revoke",friendships_revoke_path(friendship), method: :delete)%></td>
   <% end %>
