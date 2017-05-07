@@ -1,9 +1,14 @@
 <table class="table">
   <thead>
-    <td style="width:100%" ><%= button_to(publication.user.name,user_profile_path(publication.user.id), class: 'btn btn-primary btn-sm')%></td>
+    <td style="width:100%" ><%= button_to(publication.user.name,user_profile_path(publication.user.id),method: :get, class: 'btn btn-primary btn-sm')%></td>
     <% if current_user.role="admin" or @publication.user==current_user %>
 		<td><%= button_to("Delete",publication_path(publication),method: :delete, class: 'btn btn-primary btn-sm')%></td>
 		<td><%= button_to("Edit",edit_publication_path(publication),method: :get, class: 'btn btn-primary btn-sm')%></td>
+	<% end %>
+	<% if current_user.shared_publications.pluck(:publication).include? publication.id %>
+		<td><%= button_to("Unshare",unshare_publication_path(publication),method: :delete, class: 'btn btn-danger btn-sm')%></td>
+	<% else %>
+		<td><%= button_to("Share",share_publication_path(publication),method: :post, class: 'btn btn-success btn-sm')%></td>
 	<% end %>
     <td><%= button_to("Likes: #{publication.likes.length}",user_profile_path(publication.user.id), class: 'btn btn-success btn-sm')%></td>
   </thead>

@@ -84,7 +84,26 @@ class PublicationsController < ApplicationController
 		not_autorized
 	end
   end
-
+  
+  def share
+	set_publication
+	@shared=Shared_publication.new
+	@shared.publication=@publication
+	@shared.user=current_user
+	@shared.save
+	reload
+  end
+  
+  def unshare
+  	set_publication
+  	if @shared=Shared_publication.find_by(user: current_user, publication: @publication)
+  		@shared.destroy
+  		reload
+  	else
+  		not_found
+  	end
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_publication
