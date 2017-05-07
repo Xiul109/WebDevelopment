@@ -4,7 +4,9 @@ class PublicationsController < ApplicationController
   # GET /publications
   # GET /publications.json
   def index
-    @publications = Publication.all
+    friends=current_user.friendships.pluck(:friend)
+    @shared_publications=Shared_publication.where(:user.in => friends)
+    
   end
 
   # GET /publications/1
@@ -19,6 +21,9 @@ class PublicationsController < ApplicationController
 
   # GET /publications/1/edit
   def edit
+    if !rent_user.role="admin" or @publication.user=current_user
+		not_autorized
+	end
   end
 
   # POST /publications
@@ -48,25 +53,33 @@ class PublicationsController < ApplicationController
   # PATCH/PUT /publications/1
   # PATCH/PUT /publications/1.json
   def update
-    respond_to do |format|
-      if @publication.update(publication_params)
-        format.html { redirect_to @publication, notice: 'Publication was successfully updated.' }
-        format.json { render :show, status: :ok, location: @publication }
-      else
-        format.html { render :edit }
-        format.json { render json: @publication.errors, status: :unprocessable_entity }
-      end
-    end
+	if rent_user.role="admin" or @publication.user=current_user
+		respond_to do |format|
+		  if @publication.update(publication_params)
+			format.html { redirect_to @publication, notice: 'Publication was successfully updated.' }
+			format.json { render :show, status: :ok, location: @publication }
+		  else
+			format.html { render :edit }
+			format.json { render json: @publication.errors, status: :unprocessable_entity }
+		  end
+		end
+	else
+		not_autorized
+	end
   end
 
   # DELETE /publications/1
   # DELETE /publications/1.json
   def destroy
-    @publication.destroy
-    respond_to do |format|
-      format.html { redirect_to publications_url, notice: 'Publication was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    if current_user.role="admin" or @publication.user=current_user
+		@publication.destroy
+		respond_to do |format|
+		  format.html { redirect_to publications_url, notice: 'Publication was successfully destroyed.' }
+		  format.json { head :no_content }
+		end
+	else
+		not_autorized
+	end
   end
 
   private
