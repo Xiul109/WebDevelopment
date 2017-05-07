@@ -5,8 +5,7 @@ class PublicationsController < ApplicationController
   # GET /publications.json
   def index
     friends=current_user.friendships.pluck(:friend)
-    @shared_publications=Shared_publication.where(:user.in => friends)
-    
+    @publications=Publication.where(:id.in =>Shared_publication.where(:user.in => friends).distinct(:publication))
   end
 
   # GET /publications/1

@@ -8,9 +8,9 @@
   </thead>
 
   <tbody>
-    <% @shared_publications.each do |shared_publication| %>
+    <% @publications.each do |publication| %>
       <tr>
-        <%= render 'publications/publication', publication: shared_publication.publication %>
+        <%= render 'publications/publication', publication: publication %>
       </tr>
     <% end %>
   </tbody>
