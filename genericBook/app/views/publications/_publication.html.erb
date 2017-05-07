@@ -1,11 +1,13 @@
 <table class="table">
   <thead>
-    <td><%= link_to(publication.user.name,user_profile_path(publication.user.id))%></td>
-    <td style="text-align: right">Likes: <%=publication.likes.length%></td>
+    <td style="width:100%" ><%= button_to(publication.user.name,user_profile_path(publication.user.id), class: 'btn btn-primary btn-sm')%></td>
+    <td><%= button_to("Delete",user_profile_path(publication.user.id), class: 'btn btn-primary btn-sm')%></td>
+    <td><%= button_to("Edit",user_profile_path(publication.user.id), class: 'btn btn-primary btn-sm')%></td>
+    <td><%= button_to("Likes: #{publication.likes.length}",user_profile_path(publication.user.id), class: 'btn btn-success btn-sm')%></td>
   </thead>
   <tbody>
     <tr>
-      <td colspan="2"><%=publication.text%></td>
+      <td colspan="4"><%=publication.text%></td>
     </tr>
   </tbody>
 </table>
