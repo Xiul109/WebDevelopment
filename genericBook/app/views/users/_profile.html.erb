@@ -36,7 +36,7 @@
         </thead>
         <tbody>
           <% user.shared_publications.each do |publication| %>
-            <%= render 'users/publications', publication: publication.publication %>
+            <%= render 'publications/publication', publication: publication.publication %>
           <% end %>
         </tbody>
       </table>
