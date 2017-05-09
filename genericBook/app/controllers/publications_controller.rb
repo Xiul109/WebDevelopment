@@ -43,8 +43,8 @@ class PublicationsController < ApplicationController
         shared.publication=@publication
         shared.save
         if image
-        	path="public/publication_images/#{@publication.id}.im"
-        	FileUtils.copy_stream(image,Rails.root+path)
+        	path="publication_images/#{@publication.id}.im"
+        	FileUtils.copy_stream(image,Rails.root+"public/"+path)
         	@publication.update(image: path)
         end
         format.html { redirect_to @publication, notice: 'Publication was successfully created.' }

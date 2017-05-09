@@ -18,7 +18,12 @@
   </thead>
   <tbody>
     <tr>
-      <td colspan="4"><%=publication.text%></td>
+      <td colspan=4>
+          <% if publication.image%>
+		  	<img src="<%= "/"+publication.image %>" style="width:304px;height:228px;">
+		  <% end %>
+		  <br><%=publication.text%></td>
+      
     </tr>
   </tbody>
 </table>

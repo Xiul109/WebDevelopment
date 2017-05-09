@@ -102,6 +102,10 @@ class UsersController < ApplicationController
 			flash.notice="Currently you don't have friend petitions"
 		end
 	end
+	
+	def me
+		@friends=queryFriends "confirmed"
+	end
 
 	#Aux functions
 	private
@@ -114,9 +118,5 @@ class UsersController < ApplicationController
 	end
 	def user_params
 		params.require :user
-	end
-	
-	def me
-		@friends=queryFriends "confirmed"
 	end
 end
