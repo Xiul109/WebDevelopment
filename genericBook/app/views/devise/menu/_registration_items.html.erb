@@ -1,9 +1,5 @@
 <% if user_signed_in? %>
-  <li>
-  <%= link_to('Edit registration', edit_user_registration_path) %>
-  </li>
+  <%= button_to('Edit registration', edit_user_registration_path, style: "width:100%", class: 'btn btn-primary btn-sm', method: :get) %>
 <% else %>
-  <li>
-  <%= link_to('Register', new_user_registration_path)  %>
-  </li>
+  <%= button_to('Register', new_user_registration_path, style: "width:100%", class: 'btn btn-primary btn-sm', method: :get)  %>
 <% end %>

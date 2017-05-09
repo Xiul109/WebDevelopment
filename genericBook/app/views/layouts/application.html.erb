@@ -7,16 +7,27 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
-    <ul class="hmenu">
-      <%= render 'devise/menu/registration_items' %>
-      <%= render 'devise/menu/login_items' %>
-      <li><%if user_signed_in?%> You have <%=link_to @unconfirmedFriends.length, user_petitions_path%> friendship petitions<%end%></li>
-    </ul>
-    <content>
-    	<%= yield %>
-    </content>
+    <table class="table">
+      <thead>
+        <tr>
+          <th colspan="2"><%=link_to "GenericBook", root_path%></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <%asdf='btn btn-primary btn-sm';if user_signed_in?%>
+          
+          <td><table class="table"><tbody>
+            <tr><td><%= button_to current_user.name, user_me_path, class:'btn btn-primary btn-sm' , style: "width:100%",method: :get %></td></tr>
+            <tr><td><%= button_to "Petitions: #{@unconfirmedFriends.length}", user_petitions_path , class: @unconfirmedFriends.length>0 ? 'btn btn-warning btn-sm' : 'btn btn-primary btn-sm', style: "width:100%",method: :get%></td></tr>
+            <tr><td><%= render 'devise/menu/registration_items' %></td></tr>
+            <tr><td><%= render 'devise/menu/login_items' %></td></tr>
+          </tbody></table></td><%end%>
+          <td style="width:100%"><content><%= yield %></content></td>
+        </tr>
+      </tbody>
+    </table>
     <% if flash[:alert] %>
         <div class="alert"><%= flash[:alert] %></div>
     <% end %>
