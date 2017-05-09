@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   match 'publications/:id/like' => 'publications#like', via: [:post], :as => :like_publication
   match 'publications/:id/dislike' => 'publications#dislike', via: [:delete], :as => :dislike_publication
   
-  root to: "users#index"
+  root to: "publications#index"
 #  authenticated :user do
 #    root 'secret#index', as: :authenticated_root
 #  end

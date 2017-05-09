@@ -31,6 +31,7 @@ class PublicationsController < ApplicationController
   def create
     @publication = Publication.new
     @publication.text=publication_params["text"]
+    image=publication_params["image"]
     @publication.user=current_user
     
     shared=Shared_publication.new
@@ -41,6 +42,11 @@ class PublicationsController < ApplicationController
         shared.user=current_user
         shared.publication=@publication
         shared.save
+        if image
+        	path="public/publication_images/#{@publication.id}.im"
+        	FileUtils.copy_stream(image,Rails.root+path)
+        	@publication.update(image: path)
+        end
         format.html { redirect_to @publication, notice: 'Publication was successfully created.' }
         format.json { render :show, status: :created, location: @publication }
       else

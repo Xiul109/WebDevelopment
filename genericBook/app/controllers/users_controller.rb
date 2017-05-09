@@ -104,6 +104,7 @@ class UsersController < ApplicationController
 	end
 
 	#Aux functions
+	private
 	def confirmFriend user, friend
 		f1=user.friendships.find(friend: friend)
 		f1.type="confirmed"
