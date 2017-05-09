@@ -62,6 +62,12 @@ class PublicationsController < ApplicationController
 	if current_user.role="admin" or @publication.user==current_user
 		respond_to do |format|
 		  if @publication.update(text: publication_params[:text])
+		    image=publication_params["image"]
+		    if image
+		 		path="publication_images/#{@publication.id}.im"
+		    	FileUtils.copy_stream(image,Rails.root+"public/"+path)
+		    	@publication.update(image: path)
+		 	end
 			format.html { redirect_to @publication, notice: 'Publication was successfully updated.' }
 			format.json { render :show, status: :ok, location: @publication }
 		  else
