@@ -25,11 +25,4 @@ Rails.application.routes.draw do
   match 'publications/:id/dislike' => 'publications#dislike', via: [:delete], :as => :dislike_publication
   
   root to: "publications#index"
-#  authenticated :user do
-#    root 'secret#index', as: :authenticated_root
-#  end
-
-#  root "devise#sign_in"
-  
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
