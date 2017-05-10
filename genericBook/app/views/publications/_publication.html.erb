@@ -5,10 +5,12 @@
 		<td><%= button_to("Delete",publication_path(publication),method: :delete, class: 'btn btn-primary btn-sm')%></td>
 		<td><%= button_to("Edit",edit_publication_path(publication),method: :get, class: 'btn btn-primary btn-sm')%></td>
 	<% end %>
-	<% if @shared=current_user.shared_publications.find_by(publication: publication) %>
-		<td><%= button_to("Unshare",unshare_publication_path(@shared),method: :delete, class: 'btn btn-danger btn-sm')%></td>
-	<% else %>
-		<td><%= button_to("Share",share_publication_path(publication),method: :post, class: 'btn btn-success btn-sm')%></td>
+	<% if publication.user!=current_user %>
+		<% if @shared=current_user.shared_publications.find_by(publication: publication) %>
+			<td><%= button_to("Unshare",unshare_publication_path(@shared),method: :delete, class: 'btn btn-danger btn-sm')%></td>
+		<% else %>
+			<td><%= button_to("Share",share_publication_path(publication),method: :post, class: 'btn btn-success btn-sm')%></td>
+		<% end %>
 	<% end %>
 	<% if @like=publication.likes.find_by(user: current_user) %>
     	<td><%= button_to("Likes: #{publication.likes.length}",dislike_publication_path(@like),method: :delete, class: 'btn btn-danger btn-sm')%></td>

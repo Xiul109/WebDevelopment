@@ -21,6 +21,7 @@
           <td><table class="table"><tbody>
             <tr><td><%= button_to current_user.name, user_me_path, class:'btn btn-primary btn-sm' , style: "width:100%",method: :get %></td></tr>
             <tr><td><%= button_to "Petitions: #{@unconfirmedFriends.length}", user_petitions_path , class: @unconfirmedFriends.length>0 ? 'btn btn-warning btn-sm' : 'btn btn-primary btn-sm', style: "width:100%",method: :get%></td></tr>
+            <tr><td><%= button_to "Users", users_path , class: 'btn btn-primary btn-sm', style: "width:100%",method: :get%></td></tr>
             <tr><td><%= render 'devise/menu/registration_items' %></td></tr>
             <tr><td><%= render 'devise/menu/login_items' %></td></tr>
           </tbody></table></td><%end%>

@@ -1,0 +1,18 @@
+<table style="width:100%">
+	<tr><td>
+	<%= form_tag(user_search_path, :method => :get,class: :search, style: "float:right") do %>
+	  <p>
+		<%= text_field_tag :search, params[:search] %>
+		<%= submit_tag "Search", :name => nil %>
+	  </p>
+	<% end %>
+	</td></tr>
+
+	<tr><td>
+	<ul>
+	  <% @users.each do |user| %>
+		<%= render 'users/user_item',user: user %>
+	  <% end %>
+	</ul>
+	</td></tr>
+</table

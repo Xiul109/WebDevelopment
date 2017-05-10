@@ -106,6 +106,17 @@ class UsersController < ApplicationController
 	def me
 		@friends=queryFriends "confirmed"
 	end
+	
+	def search
+		if params[:search]!=""
+			@users=User.where(name: /#{params[:search]}/i)
+			if @users==0
+				flash.notice="There is not users matching the current search"
+			end
+		else
+			redirect_to users_path
+		end
+	end
 
 	#Aux functions
 	private
